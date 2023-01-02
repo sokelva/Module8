@@ -23,7 +23,7 @@ namespace FileSystem
         }
 
         public string Name { get; }
-        public double TotalSpace { get; }
-        public string FreeSpace { get; }
+        public long TotalSpace { get; }
+        public long FreeSpace { get; }
     }
 }
