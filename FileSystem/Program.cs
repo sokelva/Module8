@@ -15,6 +15,11 @@ namespace FileSystem
 
     class Drive
     {
+        public Drive()
+        {
+
+        }
+
         public Drive(string name, long totalSpace, long freeSpace)
         {
             Name = name;
@@ -26,10 +31,10 @@ namespace FileSystem
         public long TotalSpace { get; }
         public long FreeSpace { get; }
 
-       
+
     }
 
-    public class Folder
+    class Folder
     {
         public List<string> Files { get; set; } = new List<string>();
 
@@ -40,4 +45,10 @@ namespace FileSystem
             Folders.Add(name, new Folder());
         }
     }
+
+    class SystemDrive : Drive
+    {
+        public long ReservedSpace { get; set; }
+    }
+
 }
