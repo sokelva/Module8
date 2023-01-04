@@ -34,10 +34,15 @@ namespace FileSystem
             //        Console.WriteLine($"Метка: {drive.VolumeLabel}");
             //    }
             //}
-           
 
-            GetCatalogs();      // Вызов метода получения директорий
+
+            //GetCatalogs();      // Вызов метода получения директорий
+            string parh = "TEST2";
             GetCatalogsCount(); // Вызов метода подсчета директорий и файлов
+            CreateDir(parh);        // Вызов метода для создания новой папки
+            GetCatalogsCount();
+            DeleteDir(parh);
+            Console.ReadKey();
         }
 
         static void GetCatalogs()
@@ -58,12 +63,12 @@ namespace FileSystem
                 foreach (string s in files)   // Выведем их все
                     Console.WriteLine(s);
             }
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
-        static void GetCatalogsCount()
+        static void GetCatalogsCount(string path = @"/")
         {
-            string dirName = @"/"; // Прописываем путь к корневой директории MacOS (для Windows скорее всего тут будет "C:\\")
+            string dirName = @"/";         // Прописываем путь к корневой директории MacOS (для Windows скорее всего тут будет "C:\\")
             if (Directory.Exists(dirName)) // Проверим, что директория существует
             {
                 Console.WriteLine("Считаем папки:");
@@ -77,7 +82,7 @@ namespace FileSystem
                 Console.WriteLine("---------------------\nКоличество папок: {0}", i);
 
                 Console.WriteLine("\nСчитаем файлы.");
-                string[] files = Directory.GetFiles(dirName, "*", SearchOption.TopDirectoryOnly);// Получим все файлы корневого каталога
+                string[] files = Directory.GetFiles(dirName, "*", SearchOption.TopDirectoryOnly); // Получим все файлы корневого каталога
 
                 int j = 0;
                 foreach (string s in files) 
@@ -90,19 +95,50 @@ namespace FileSystem
 
             try
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(@"/" /* Или С:\\ для Windows */ );
+                DirectoryInfo dirInfo = new DirectoryInfo(@"/"); /* Или С:\\ для Windows */
+                //CreateDir();
                 if (dirInfo.Exists)
                 {
-                    Console.WriteLine(dirInfo.GetDirectories().Length + dirInfo.GetFiles().Length);
+                    Console.WriteLine("Всего: {0}\n\n", dirInfo.GetDirectories().Length + dirInfo.GetFiles().Length);
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            Console.ReadKey();
 
+           
+            //Console.ReadKey();
         }
+
+        public static void CreateDir(string foldername, string path = @"/")
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (!dirInfo.Exists)
+                dirInfo.Create();
+
+            dirInfo.CreateSubdirectory(foldername);
+
+            Console.WriteLine($"Название каталога: {dirInfo.Name}");
+            Console.WriteLine($"Полное название каталога: {dirInfo.FullName}");
+            Console.WriteLine($"Время создания каталога: {dirInfo.CreationTime}");
+            Console.WriteLine($"Корневой каталог: {dirInfo.Root}\n\n");
+        }
+
+        public static void DeleteDir(string path)
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(@"\" + path);
+                dirInfo.Delete(true); // Удаление со всем содержимым
+                Console.WriteLine("Каталог удален");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
     }
 
     class Drive
