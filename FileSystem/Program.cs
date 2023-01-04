@@ -35,7 +35,7 @@ namespace FileSystem
             //    }
             //}
 
-
+            Task2.FileAppendText();
             //GetCatalogs();      // Вызов метода получения директорий
             string path = "TEST2";
             string newpath = "TEST";
@@ -192,12 +192,34 @@ namespace FileSystem
         public SystemDrive()
         {
             var strInt = int.TryParse(Console.ReadLine(), out int result);
-            
         }
+    }
 
+    static class Task2
+    {
+        public static void FileAppendText()
+        {
+            var fileInfo = new FileInfo(@"C:\Users\LocalUser\SkillFactory\repos\Module8\FileSystem\Program.cs");
 
+            using (StreamWriter sw = fileInfo.AppendText())
+            {
+                sw.WriteLine($"// Время запуска: {DateTime.Now}");
+            }
+
+            using (StreamReader sr = fileInfo.OpenText())
+            {
+                string str = "";
+                while ((str = sr.ReadLine()) != null)
+                    Console.WriteLine(str);
+
+                Console.ReadKey();
+
+            }
+        }
     }
 
 
 
 }
+// Время запуска: 05.01.2023 00:06:12
+// Время запуска: 05.01.2023 00:07:18
