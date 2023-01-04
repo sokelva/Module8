@@ -37,11 +37,13 @@ namespace FileSystem
 
 
             //GetCatalogs();      // Вызов метода получения директорий
-            string parh = "TEST2";
+            string path = "TEST2";
+            string newpath = "TEST";
             GetCatalogsCount(); // Вызов метода подсчета директорий и файлов
-            CreateDir(parh);        // Вызов метода для создания новой папки
+            CreateDir(path);        // Вызов метода для создания новой папки
             GetCatalogsCount();
-            DeleteDir(parh);
+            //DeleteDir(path);
+            MoveDir(path, newpath);
             Console.ReadKey();
         }
 
@@ -137,6 +139,15 @@ namespace FileSystem
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public static void MoveDir(string path, string newPath)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(@"\" + path);
+            //string newPath = @"\TEST";
+
+            if (dirInfo.Exists && !Directory.Exists(newPath))
+                dirInfo.MoveTo(newPath);
         }
 
     }
