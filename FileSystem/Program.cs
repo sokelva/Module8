@@ -85,7 +85,20 @@ namespace FileSystem
                     j++;
                     
                 }
-                Console.WriteLine("---------------------\nКоличество файлов: {0}", j);
+                Console.WriteLine("---------------------\nКоличество файлов: {0}\n\n", j);
+            }
+
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(@"/" /* Или С:\\ для Windows */ );
+                if (dirInfo.Exists)
+                {
+                    Console.WriteLine(dirInfo.GetDirectories().Length + dirInfo.GetFiles().Length);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
             Console.ReadKey();
 
