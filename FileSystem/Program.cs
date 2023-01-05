@@ -12,7 +12,8 @@ namespace FileSystem
         static void Main(string[] args)
         {
             string filePath = @"C:\Users\elsokolova\Desktop\BinaryFile.bin";
-            string binFile; 
+            string binFile;
+            
 
             if (File.Exists(filePath))
             {
@@ -22,6 +23,15 @@ namespace FileSystem
                     Console.WriteLine($"Информация из файла BinaryFile.bin:{binFile}");
                     Console.ReadKey();
                     reader.Close();
+                }
+
+                // Создаем объект BinaryWriter и указываем, куда будет направлен поток данных
+                using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
+                {
+                    DriveInfo[] drives = DriveInfo.GetDrives(); ;
+                    // записываем данные в разном формате
+                    writer.Write($"Файл изменен{DateTime.Now} на компьютере {Environment.OSVersion}");
+                    writer.Close();
                 }
             }
 
